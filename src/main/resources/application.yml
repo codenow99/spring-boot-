@@ -13,7 +13,7 @@ spring:
 #    6. 每个friend有两个属性：hobby(爱好)和性别(sex)
 
 family:
-  family-name: #"happy family"
+  family-name: "happy family"
   father:
     name: zhihao
     age: 23 #${random.int}
