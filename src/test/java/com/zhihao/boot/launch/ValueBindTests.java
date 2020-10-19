@@ -1,5 +1,6 @@
 package com.zhihao.boot.launch;
 
+import com.zhihao.boot.launch.model.Employee;
 import com.zhihao.boot.launch.model.Family;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,8 +16,16 @@ public class ValueBindTests {
     @Resource
     Family family;
 
+    @Resource
+    Employee employee;
+
     @Test
     public void valueBindTest() throws Exception {
         System.out.println(family.toString());
+    }
+
+    @Test
+    public void valueBindTest2(){
+        System.out.println(employee.toString());
     }
 }

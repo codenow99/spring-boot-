@@ -6,16 +6,16 @@
 #    6. 每个friend有两个属性：hobby(爱好)和性别(sex)
 
 family:
-  family-name: "happy family"
+  familyName: "happy family"
   father:
-    name: zhihao
-    age: 23 #${random.int}
+    name: zimug
+    age: 23
   mother:
     alias:
       - lovely
-      - alice
+      - ailice
   child:
-    name: ${family.father.name:zhihao2}  #如果family.father.name没有值 择选zhihao2
+    name: ${family.father.name:zimug2}
     age: 5
     friends:
       - hobby: football
