@@ -3,10 +3,12 @@ package com.zhihao.boot.launch.controller;
 import com.zhihao.boot.launch.AjaxResponse;
 import com.zhihao.boot.launch.model.Article;
 import com.zhihao.boot.launch.model.Reader;
+import com.zhihao.boot.launch.service.ArticleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,27 +19,16 @@ import java.util.List;
 @RequestMapping("/rest")
 public class ArticleController {
 
+    @Resource
+    ArticleService articleService;
+
     //获取一篇文章
     //@RequestMapping(value = "/articles/{id}", method = RequestMethod.GET)
     @GetMapping("/articles/{id}")
     public @ResponseBody
     AjaxResponse getArticle(@PathVariable("id") Long id) {
-
-        List<Reader> readers = new ArrayList<Reader>() {{
-            add(new Reader("kobe", 21));
-            add(new Reader("james", 20));
-        }};
-
-        Article article = Article.builder()
-                .id(id)
-                .author("zhihao")
-                .content("spring boot学习")
-                .createTime(new Date())
-                .reader(readers)
-                .title("t1").build();
-
+        Article article = articleService.getArticle(id);
         log.info("article:" + article);
-
         return AjaxResponse.success(article);
     }
 
@@ -45,8 +36,9 @@ public class ArticleController {
     //@RequestMapping(value = "/articles", method = RequestMethod.POST)
     @PostMapping("/articles")
     public @ResponseBody
-    AjaxResponse saveArticle(@RequestBody Article article,
-                             @RequestHeader String aaa) {
+    AjaxResponse saveArticle(@RequestBody Article article) {
+
+        articleService.saveArticle(article);
         log.info("saveArticle:" + article);
         return AjaxResponse.success();
     }
@@ -67,9 +59,10 @@ public class ArticleController {
     @PutMapping("/articles")
     public @ResponseBody
     AjaxResponse updateArticle(@RequestBody Article article) {
-        if (article.getId() == null) {
-            //todo 抛出一个自定义异常
+        if(article.getId() == null){
+            //TODO 抛出一个异常
         }
+        articleService.updateArticle(article);
         log.info("updateArticle:" + article);
         return AjaxResponse.success();
     }
@@ -79,8 +72,17 @@ public class ArticleController {
     @DeleteMapping("/articles/{id}")
     public @ResponseBody
     AjaxResponse deleteArticle(@PathVariable("id") Long id) {
+        articleService.deleteArticle(id);
         log.info("deleteArticle:" + id);
         return AjaxResponse.success();
     }
+    @GetMapping("/articles")
+    public @ResponseBody
+    AjaxResponse getArticle() {
+        List<Article> articles = articleService.getAll();
+        log.info("articles:" + articles);
+        return AjaxResponse.success(articles);
+    }
+
 
 }

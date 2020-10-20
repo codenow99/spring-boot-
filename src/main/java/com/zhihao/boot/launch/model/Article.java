@@ -16,15 +16,15 @@ import java.util.List;
 @JsonPropertyOrder(value = {"content", "title"})
 public class Article {
 
-    @JsonIgnore
+    //@JsonIgnore
     private Long id;
-    @JsonProperty("auther")
+    //@JsonProperty("auther")
     private String author;
     private String title;
     private String content;
-    @JsonFormat(pattern = "yyyy/MM/dd HH:mm:ss", timezone = "Asia/Shanghai")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "Asia/Shanghai")
     private Date createTime;
-    @JsonInclude(JsonInclude.Include.NON_NULL)
+    //@JsonInclude(JsonInclude.Include.NON_NULL)
     private List<Reader> reader;
 
 }
