@@ -12,7 +12,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class ArticleJDBCService implements ArticleService {
+public class ArticleServiceJDBCImpl implements ArticleService {
 
     @Resource
     private ArticleJDBCDAO articleJDBCDAO;
@@ -28,7 +28,7 @@ public class ArticleJDBCService implements ArticleService {
     public void saveArticle(Article article) {
         articleJDBCDAO.save(article, primaryJdbcTemplate);
         articleJDBCDAO.save(article, secondaryJdbcTemplate);
-        int a = 10 / 0;
+        //int a = 10 / 0;
     }
 
     @Override

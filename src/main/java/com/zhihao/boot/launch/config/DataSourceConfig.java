@@ -1,5 +1,6 @@
 package com.zhihao.boot.launch.config;
 
+import com.atomikos.jdbc.AtomikosDataSourceBean;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.jdbc.DataSourceBuilder;
@@ -14,17 +15,33 @@ import javax.sql.DataSource;
 @Configuration
 public class DataSourceConfig {
 
+//    @Primary
+//    @Bean("primaryDataSource")
+//    @ConfigurationProperties(prefix = "spring.datasource.primary")
+//    public DataSource primaryDataSource() {
+//        return DataSourceBuilder.create().build();
+//    }
+//
+//    @Bean("secondaryDataSource")
+//    @ConfigurationProperties(prefix = "spring.datasource.secondary")
+//    public DataSource secondaryDataSource() {
+//        return DataSourceBuilder.create().build();
+//    }
+
+    //jta数据源primarydb
+    @Bean(initMethod="init", destroyMethod="close", name="primaryDataSource")
     @Primary
-    @Bean("primaryDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.primary")
+    @ConfigurationProperties(prefix = "primarydb")
     public DataSource primaryDataSource() {
-        return DataSourceBuilder.create().build();
+        //这里是关键，返回的是AtomikosDataSourceBean，所有的配置属性也都是注入到这个类里面
+        return new AtomikosDataSourceBean();
     }
 
-    @Bean("secondaryDataSource")
-    @ConfigurationProperties(prefix = "spring.datasource.secondary")
-    public DataSource secondaryDataSource() {
-        return DataSourceBuilder.create().build();
+    //jta数据源secondarydb
+    @Bean(initMethod="init", destroyMethod="close", name="secondaryDataSource")
+    @ConfigurationProperties(prefix = "secondarydb")
+    public DataSource secondaryDataSource()  {
+        return new AtomikosDataSourceBean();
     }
 
     @Bean("primaryJdbcTemplate")
